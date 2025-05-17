@@ -6,10 +6,22 @@
   <meta http-equiv="refresh" content="5;url=https://weather.infy.uk">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Font & Meta -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-light: linear-gradient(135deg, #d0f0ff, #ffffff);
+      --bg-dark: linear-gradient(135deg, #1a1a1a, #0f2027);
+      --card-bg-light: rgba(255, 255, 255, 0.75);
+      --card-bg-dark: rgba(30, 30, 30, 0.65);
+      --text-light: #2c3e50;
+      --text-dark: #ecf0f1;
+      --accent: #00bcd4;
+      --shadow-light: rgba(0, 0, 0, 0.1);
+      --shadow-dark: rgba(0, 0, 0, 0.5);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -17,42 +29,76 @@
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
+      font-family: 'Inter', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #d9f4ff, #ffffff);
-      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: var(--bg-light);
+      transition: background 0.5s ease;
       overflow: hidden;
+      color: var(--text-light);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+    }
+
+    .background {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, var(--accent), transparent 70%);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background-color: var(--card-bg-light);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 40px var(--shadow-light);
       padding: 40px;
       text-align: center;
-      max-width: 480px;
+      max-width: 500px;
       width: 90%;
       animation: fadeInUp 0.7s ease forwards;
+      transition: all 0.5s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .card {
+        background-color: var(--card-bg-dark);
+        box-shadow: 0 20px 40px var(--shadow-dark);
+      }
     }
 
     h1 {
       font-size: 2.2rem;
       margin-bottom: 10px;
-      color: #005fa3;
+      color: var(--accent);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
     p {
       font-size: 1.1rem;
-      color: #333;
-      margin: 12px 0;
+      margin: 10px 0;
     }
 
     a {
-      color: #0077cc;
+      color: var(--accent);
       font-weight: 600;
       text-decoration: none;
       border-bottom: 2px solid transparent;
@@ -60,19 +106,19 @@
     }
 
     a:hover {
-      border-color: #0077cc;
+      border-color: var(--accent);
+      text-shadow: 0 0 5px var(--accent);
     }
 
     .countdown {
-      margin-top: 18px;
+      margin-top: 15px;
       font-size: 1rem;
-      color: #444;
     }
 
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -82,11 +128,12 @@
   </style>
 </head>
 <body>
+  <div class="background"></div>
   <div class="card">
-    <h1>Thanks for the Support!</h1>
+    <h1>Thanks for the Support ❤️</h1>
       <h1>We've Moved!</h1>
     <p>Our new home is <a href="https://weather.infy.uk">weather.infy.uk</a></p>
-    <p>You'll be automatically redirected in <span id="count">5</span> seconds.</p>
+    <p>You’ll be redirected in <span id="count">5</span> seconds.</p>
     <p class="countdown">Can’t wait? <a href="https://weather.infy.uk">Click here to go now</a>.</p>
   </div>
 
