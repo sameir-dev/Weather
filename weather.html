@@ -5,8 +5,6 @@
   <title>Redirecting...</title>
   <meta http-equiv="refresh" content="5;url=https://weather.infy.uk">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -70,12 +68,13 @@
       -webkit-backdrop-filter: blur(15px);
       border-radius: 20px;
       box-shadow: 0 20px 40px var(--shadow-light);
-      padding: 40px;
+      padding: 40px 30px;
       text-align: center;
       max-width: 500px;
       width: 90%;
       animation: fadeInUp 0.7s ease forwards;
-      transition: all 0.5s ease;
+      position: relative;
+      z-index: 1;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -86,15 +85,20 @@
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
       color: var(--accent);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+
+    .thankyou {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #444;
     }
 
     p {
-      font-size: 1.1rem;
-      margin: 10px 0;
+      font-size: 1.05rem;
+      margin: 8px 0;
     }
 
     a {
@@ -112,7 +116,6 @@
 
     .countdown {
       margin-top: 15px;
-      font-size: 1rem;
     }
 
     @keyframes fadeInUp {
@@ -129,7 +132,9 @@
 </head>
 <body>
   <div class="background"></div>
+
   <div class="card">
+    <div class="thankyou">Thank you for the support ❤️</div>
     <h1>We've Moved!</h1>
     <p>Our new home is <a href="https://weather.infy.uk">weather.infy.uk</a></p>
     <p>You’ll be redirected in <span id="count">5</span> seconds.</p>
