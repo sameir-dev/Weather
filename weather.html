@@ -6,84 +6,97 @@
   <meta http-equiv="refresh" content="5;url=https://weather.infy.uk">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Font -->
+  <!-- Font & Meta -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
       margin: 0;
       padding: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: #2c3e50;
+      background: linear-gradient(135deg, #d9f4ff, #ffffff);
+      font-family: 'Inter', sans-serif;
       overflow: hidden;
     }
 
     .card {
-      background-color: white;
-      padding: 40px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      padding: 40px;
       text-align: center;
-      animation: fadeIn 0.8s ease-in-out;
-      max-width: 500px;
+      max-width: 480px;
+      width: 90%;
+      animation: fadeInUp 0.7s ease forwards;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 10px;
-      color: #0077cc;
+      color: #005fa3;
     }
 
     p {
       font-size: 1.1rem;
-      margin: 15px 0;
+      color: #333;
+      margin: 12px 0;
     }
 
     a {
       color: #0077cc;
       font-weight: 600;
       text-decoration: none;
-      border-bottom: 2px solid #0077cc;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
     }
 
     a:hover {
-      color: #005fa3;
-      border-color: #005fa3;
+      border-color: #0077cc;
     }
 
     .countdown {
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-top: 10px;
+      margin-top: 18px;
+      font-size: 1rem;
+      color: #444;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Thanks for your Support ❤️</h1>
-    <h1>We've Moved!</h1>
+    <h1>Thanks for the Support!</h1>
+      <h1>We've Moved!</h1>
     <p>Our new home is <a href="https://weather.infy.uk">weather.infy.uk</a></p>
-    <p>You’ll be redirected automatically in <span id="count">5</span> seconds.</p>
+    <p>You'll be automatically redirected in <span id="count">5</span> seconds.</p>
     <p class="countdown">Can’t wait? <a href="https://weather.infy.uk">Click here to go now</a>.</p>
   </div>
 
   <script>
-    let seconds = 5;
+    let timeLeft = 5;
     const countEl = document.getElementById('count');
-    const timer = setInterval(() => {
-      seconds--;
-      countEl.textContent = seconds;
-      if (seconds <= 0) clearInterval(timer);
+    const interval = setInterval(() => {
+      timeLeft--;
+      countEl.textContent = timeLeft;
+      if (timeLeft <= 0) clearInterval(interval);
     }, 1000);
   </script>
 </body>
