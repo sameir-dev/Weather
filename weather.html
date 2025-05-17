@@ -5,8 +5,6 @@
   <title>Redirecting...</title>
   <meta http-equiv="refresh" content="5;url=https://weather.infy.uk">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -70,12 +68,13 @@
       -webkit-backdrop-filter: blur(15px);
       border-radius: 20px;
       box-shadow: 0 20px 40px var(--shadow-light);
-      padding: 40px;
+      padding: 40px 30px;
       text-align: center;
       max-width: 500px;
       width: 90%;
       animation: fadeInUp 0.7s ease forwards;
-      transition: all 0.5s ease;
+      position: relative;
+      z-index: 1;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -86,15 +85,20 @@
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
       color: var(--accent);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+    }
+
+    .thankyou {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #444;
     }
 
     p {
-      font-size: 1.1rem;
-      margin: 10px 0;
+      font-size: 1.05rem;
+      margin: 8px 0;
     }
 
     a {
@@ -110,9 +114,22 @@
       text-shadow: 0 0 5px var(--accent);
     }
 
+    #runner {
+      width: 80px;
+      position: absolute;
+      bottom: 10px;
+      left: -100px;
+      animation: runAcross 5s linear infinite;
+    }
+
+    @keyframes runAcross {
+      0% { left: -100px; transform: scaleX(1); }
+      50% { transform: scaleX(1); }
+      100% { left: 110%; transform: scaleX(1); }
+    }
+
     .countdown {
       margin-top: 15px;
-      font-size: 1rem;
     }
 
     @keyframes fadeInUp {
@@ -129,9 +146,15 @@
 </head>
 <body>
   <div class="background"></div>
+  
+  <!-- Animated Runner (Courier Style SVG) -->
+  <svg id="runner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path fill="#00bcd4" d="M32 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 10c2 0 4 1 5 3l3 5h6c1 0 2 1 2 2s-1 2-2 2h-7l-3-4-3 8 8 8h6c1 0 2 1 2 2s-1 2-2 2h-7l-10-10-3 10h-6l-4 8h-4c-1 0-2-1-2-2s1-2 2-2h3l4-8 2-6-5-5v-6l6-3zm-6 34a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm14 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/>
+  </svg>
+
   <div class="card">
-    <h1>Thanks for the Support ❤️</h1>
-      <h1>We've Moved!</h1>
+    <div class="thankyou">Thank you for the support ❤️</div>
+    <h1>We've Moved!</h1>
     <p>Our new home is <a href="https://weather.infy.uk">weather.infy.uk</a></p>
     <p>You’ll be redirected in <span id="count">5</span> seconds.</p>
     <p class="countdown">Can’t wait? <a href="https://weather.infy.uk">Click here to go now</a>.</p>
