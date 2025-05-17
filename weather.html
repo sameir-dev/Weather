@@ -9,33 +9,26 @@
 
   <style>
     :root {
-      --bg-light: linear-gradient(135deg, #d0f0ff, #ffffff);
-      --bg-dark: linear-gradient(135deg, #1a1a1a, #0f2027);
-      --card-bg-light: rgba(255, 255, 255, 0.75);
-      --card-bg-dark: rgba(30, 30, 30, 0.65);
+      --accent: #ff4081;
+      --bg-gradient: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb, #fcb69f);
+      --bg-dark: linear-gradient(135deg, #1c1c1c, #0f2027);
       --text-light: #2c3e50;
       --text-dark: #ecf0f1;
-      --accent: #00bcd4;
-      --shadow-light: rgba(0, 0, 0, 0.1);
-      --shadow-dark: rgba(0, 0, 0, 0.5);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: var(--bg-light);
-      transition: background 0.5s ease;
       overflow: hidden;
-      color: var(--text-light);
+      transition: background 0.5s ease;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -45,65 +38,42 @@
       }
     }
 
-    .background {
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at center, var(--accent), transparent 70%);
-      animation: rotate 20s linear infinite;
-      z-index: -1;
-      opacity: 0.2;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
     .card {
-      background-color: var(--card-bg-light);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      box-shadow: 0 20px 40px var(--shadow-light);
       padding: 40px 30px;
-      text-align: center;
       max-width: 500px;
       width: 90%;
-      animation: fadeInUp 0.7s ease forwards;
+      text-align: center;
       position: relative;
       z-index: 1;
+      animation: fadeIn 1s ease;
     }
 
     @media (prefers-color-scheme: dark) {
       .card {
-        background-color: var(--card-bg-dark);
-        box-shadow: 0 20px 40px var(--shadow-dark);
+        background: rgba(0, 0, 0, 0.65);
       }
     }
 
     h1 {
-      font-size: 2rem;
       color: var(--accent);
       margin-bottom: 10px;
     }
 
     .thankyou {
       font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: #444;
+      margin-bottom: 18px;
     }
 
     p {
-      font-size: 1.05rem;
-      margin: 8px 0;
+      margin: 10px 0;
     }
 
     a {
       color: var(--accent);
-      font-weight: 600;
+      font-weight: bold;
       text-decoration: none;
       border-bottom: 2px solid transparent;
       transition: all 0.3s ease;
@@ -111,55 +81,50 @@
 
     a:hover {
       border-color: var(--accent);
-      text-shadow: 0 0 5px var(--accent);
     }
 
-    #runner {
-      width: 80px;
+    .countdown {
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+
+    .superhero {
       position: absolute;
       bottom: 10px;
       left: -100px;
+      width: 80px;
+      z-index: 0;
       animation: runAcross 5s linear infinite;
     }
 
     @keyframes runAcross {
       0% { left: -100px; transform: scaleX(1); }
-      50% { transform: scaleX(1); }
       100% { left: 110%; transform: scaleX(1); }
     }
 
-    .countdown {
-      margin-top: 15px;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  
-  <!-- Animated Runner (Courier Style SVG) -->
-  <svg id="runner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <path fill="#00bcd4" d="M32 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 10c2 0 4 1 5 3l3 5h6c1 0 2 1 2 2s-1 2-2 2h-7l-3-4-3 8 8 8h6c1 0 2 1 2 2s-1 2-2 2h-7l-10-10-3 10h-6l-4 8h-4c-1 0-2-1-2-2s1-2 2-2h3l4-8 2-6-5-5v-6l6-3zm-6 34a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm14 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/>
+  <!-- Animated Superhero SVG -->
+  <svg class="superhero" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#e53935" d="M32 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm2 10c2 0 4 1 5 3l3 5h6c1 0 2 1 2 2s-1 2-2 2h-7l-3-4-3 8 8 8h6c1 0 2 1 2 2s-1 2-2 2h-7l-10-10-3 10h-6l-4 8h-4c-1 0-2-1-2-2s1-2 2-2h3l4-8 2-6-5-5v-6l6-3z"/>
+    <path fill="#1e88e5" d="M30 58a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm14 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
   </svg>
 
+  <!-- Content -->
   <div class="card">
-    <div class="thankyou">Thank you for the support ❤️</div>
-    <h1>We've Moved!</h1>
+    <div class="thankyou">Thank you for the Support ❤️</div>
+    <h1>We’ve Moved!</h1>
     <p>Our new home is <a href="https://weather.infy.uk">weather.infy.uk</a></p>
     <p>You’ll be redirected in <span id="count">5</span> seconds.</p>
     <p class="countdown">Can’t wait? <a href="https://weather.infy.uk">Click here to go now</a>.</p>
   </div>
 
+  <!-- Countdown Script -->
   <script>
     let timeLeft = 5;
     const countEl = document.getElementById('count');
