@@ -2,188 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Weather by SAMEER</title>
+  <title>Redirecting...</title>
+  <meta http-equiv="refresh" content="5;url=https://weather.infy.uk">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
+      background-color: #f0f8ff;
       text-align: center;
-      background: #e0f7fa;
-      transition: background 0.5s ease;
+      padding: 50px;
+      color: #333;
     }
-    h1 {
-      margin-bottom: 10px;
+    a {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
     }
-    input, button, select {
-      padding: 10px;
-      margin: 10px;
-      font-size: 16px;
+    a:hover {
+      text-decoration: underline;
     }
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-    .weather-icon {
-      width: 100px;
-    }
-    .spinner {
-      display: none;
-      font-size: 20px;
-      margin-top: 10px;
-    }
-    @media (max-width: 600px) {
-      input, button, select {
-        width: 80%;
-        margin-top: 5px;
-      }
-    }
-    #history {
-      margin-top: 20px;
-      font-size: 14px;
-    }
-    #history button {
-      font-size: 14px;
-      margin: 2px;
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <h1>Get Weather</h1>
-  <input type="text" id="cityInput" placeholder="Enter city name">
-  <button onclick="getWeather()">Get Weather</button>
-  <button onclick="getLocation()">📍 Use My Location</button>
-  <select id="unitSelect" onchange="toggleUnit()">
-    <option value="metric">°C</option>
-    <option value="imperial">°F</option>
-  </select>
-
-  <div class="spinner" id="spinner">Loading...</div>
-  <div id="result"></div>
-  <div id="history"></div>
-
-  <script>
-    const API_KEY = "c067900401a2352866ee801ad7a65fa1"; // 🔐 Replace with your actual key
-    let currentUnit = "metric";
-
-    document.getElementById("cityInput").focus();
-    document.getElementById("cityInput").addEventListener("keypress", function (e) {
-      if (e.key === "Enter") getWeather();
-    });
-
-    function getWeather(city = null, lat = null, lon = null) {
-      document.getElementById("spinner").style.display = "block";
-      document.getElementById("result").innerHTML = "";
-
-      let url = `https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=${currentUnit}`;
-      if (city) {
-        url += `&q=${city}`;
-        saveToHistory(city);
-      } else if (lat && lon) {
-        url += `&lat=${lat}&lon=${lon}`;
-      } else {
-        city = document.getElementById("cityInput").value.trim();
-        if (!city) {
-          alert("Please enter a city name.");
-          document.getElementById("spinner").style.display = "none";
-          return;
-        }
-        url += `&q=${city}`;
-        saveToHistory(city);
-      }
-
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById("spinner").style.display = "none";
-          if (data.cod !== 200) {
-            document.getElementById("result").innerText = `Error ${data.cod}: ${data.message}`;
-            return;
-          }
-
-          const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-          const tempUnit = currentUnit === "metric" ? "°C" : "°F";
-
-          document.getElementById("result").innerHTML = `
-            <h2>${data.name}, ${data.sys.country}</h2>
-            <img src="${iconUrl}" class="weather-icon">
-            <p><strong>${data.weather[0].description}</strong></p>
-            <p>🌡️ Temperature: ${data.main.temp}${tempUnit}</p>
-            <p>💧 Humidity: ${data.main.humidity}%</p>
-            <p>💨 Wind: ${data.wind.speed} ${currentUnit === "metric" ? "m/s" : "mph"}</p>
-          `;
-          updateBackground(data.weather[0].main);
-        })
-        .catch(err => {
-          document.getElementById("spinner").style.display = "none";
-          console.error("Error:", err);
-          document.getElementById("result").innerText = "Failed to fetch weather data.";
-        });
-    }
-
-    function updateBackground(condition) {
-      let bg;
-      switch (condition.toLowerCase()) {
-        case "clear": bg = "#fceabb"; break;
-        case "clouds": bg = "#d3d3d3"; break;
-        case "rain": case "drizzle": bg = "#b3cde0"; break;
-        case "thunderstorm": bg = "#777"; break;
-        case "snow": bg = "#fffafa"; break;
-        default: bg = "#e0f7fa";
-      }
-      document.body.style.background = bg;
-    }
-
-    function getLocation() {
-      if (!navigator.geolocation) {
-        alert("Geolocation not supported.");
-        return;
-      }
-      navigator.geolocation.getCurrentPosition(
-        position => getWeather(null, position.coords.latitude, position.coords.longitude),
-        () => alert("Unable to retrieve your location.")
-      );
-    }
-
-    function toggleUnit() {
-      currentUnit = document.getElementById("unitSelect").value;
-      const lastCity = localStorage.getItem("lastCity");
-      if (lastCity) getWeather(lastCity);
-    }
-
-    function saveToHistory(city) {
-      localStorage.setItem("lastCity", city);
-      let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
-      if (!history.includes(city)) {
-        history.unshift(city);
-        if (history.length > 5) history.pop();
-        localStorage.setItem("searchHistory", JSON.stringify(history));
-      }
-      renderHistory();
-    }
-
-    function renderHistory() {
-      const historyDiv = document.getElementById("history");
-      const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
-      if (history.length === 0) {
-        historyDiv.innerHTML = "";
-        return;
-      }
-      historyDiv.innerHTML = "<strong>Recent Searches:</strong><br>";
-      history.forEach(city => {
-        const btn = document.createElement("button");
-        btn.textContent = city;
-        btn.onclick = () => getWeather(city);
-        historyDiv.appendChild(btn);
-      });
-    }
-
-    renderHistory();
-  </script>
-<p style="position: fixed; bottom: 10px; right: 10px; font-size: 14px; font-family: 'Arial', sans-serif; color: #555;">
-  Crafted with ❤️ by  <a href="https://linktr.ee/SocialMedia_Handles" target="_blank" style="color: #555; text-decoration: none; font-weight: bold;">Sameer</a>.
-</p>
-
+  <div class="container">
+    <h1>We've Moved!</h1>
+    <p>We've moved to a new URL. You’ll be redirected in 5 seconds.</p>
+    <p>If not, <a href="https://weather.infy.uk">click here to go now</a>.</p>
+  </div>
 </body>
 </html>
